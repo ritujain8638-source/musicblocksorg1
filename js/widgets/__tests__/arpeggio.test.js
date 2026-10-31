@@ -303,6 +303,22 @@ describe("Arpeggio Widget", () => {
             expect(cell2.style.backgroundColor).toBe("black");
             expect(cell1.style.backgroundColor).not.toBe("black");
         });
+
+        test("should not highlight the column label when hovering a grid cell", () => {
+            const cell = document.getElementById("2,1");
+            const headerCell = document.getElementById("1");
+
+            expect(cell).not.toBeNull();
+            expect(headerCell).not.toBeNull();
+
+            cell.onmouseover();
+            expect(cell.style.backgroundColor).toBe("var(--color-selector-selected)");
+            expect(headerCell.style.backgroundColor).toBe("var(--color-selector-bg)");
+
+            cell.onmouseout();
+            expect(cell.style.backgroundColor).toBe("var(--color-selector-bg)");
+            expect(headerCell.style.backgroundColor).toBe("var(--color-selector-bg)");
+        });
     });
 
     // --- Action Button Tests ---

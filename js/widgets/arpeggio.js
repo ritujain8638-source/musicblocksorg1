@@ -493,11 +493,11 @@ class Arpeggio {
         const arpeggioTable = this._arpeggioTable;
         let table;
         let row;
-        let cell;
+        let headerCell;
         for (let i = 0; i < arpeggioTable.rows.length - 1; i++) {
             table = this._arpeggioCellTables[i];
             row = table.rows[0];
-            cell = row.insertCell();
+            const cell = row.insertCell();
             cell.style.height = Arpeggio.CELLSIZE + "px";
             cell.width = Arpeggio.CELLSIZE;
             cell.style.width = cell.width;
@@ -523,19 +523,19 @@ class Arpeggio {
 
         const arpeggioNoteTable = docById("arpeggioNoteTable");
         row = arpeggioNoteTable.rows[0];
-        cell = row.insertCell();
-        cell.height = Arpeggio.CELLSIZE + 1 + "px";
-        cell.width = Arpeggio.CELLSIZE;
-        cell.style.width = cell.width + "px";
-        cell.style.minWidth = cell.style.width;
-        cell.style.maxWidth = cell.style.width;
-        cell.style.height = Arpeggio.CELLSIZE + "px";
-        cell.style.fontSize = Math.floor(this._cellScale * 50) + "%";
-        cell.style.lineHeight = 100 + "%";
-        cell.setAttribute("id", arpeggioIdx);
-        cell.className = "headcol";
-        cell.textContent = arpeggioName;
-        cell.style.backgroundColor = "var(--color-selector-bg)";
+        headerCell = row.insertCell();
+        headerCell.height = Arpeggio.CELLSIZE + 1 + "px";
+        headerCell.width = Arpeggio.CELLSIZE;
+        headerCell.style.width = headerCell.width + "px";
+        headerCell.style.minWidth = headerCell.style.width;
+        headerCell.style.maxWidth = headerCell.style.width;
+        headerCell.style.height = Arpeggio.CELLSIZE + "px";
+        headerCell.style.fontSize = Math.floor(this._cellScale * 50) + "%";
+        headerCell.style.lineHeight = 100 + "%";
+        headerCell.setAttribute("id", arpeggioIdx);
+        headerCell.className = "headcol";
+        headerCell.textContent = arpeggioName;
+        headerCell.style.backgroundColor = "var(--color-selector-bg)";
     }
 
     /**
