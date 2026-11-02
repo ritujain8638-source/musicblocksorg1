@@ -94,6 +94,13 @@ var SHARP_NAMES = [
  * @returns {string[]} array of note names, length = edo
  */
 function generateNoteNames(edo) {
+    const numericEdo = Number(edo);
+    if (!Number.isFinite(numericEdo) || !Number.isInteger(numericEdo) || numericEdo <= 0) {
+        return generateNoteNames(12);
+    }
+
+    edo = numericEdo;
+
     if (EDO_NOTE_NAMES[edo]) {
         return EDO_NOTE_NAMES[edo];
     }
