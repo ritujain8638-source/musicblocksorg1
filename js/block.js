@@ -1778,148 +1778,101 @@ class Block {
 
             if (that.collapseText === null) {
                 const fontSize = 10 * that.protoblock.scale;
+                let collapseLabel;
                 switch (that.name) {
                     case "action":
-                        that.collapseText = new createjs.Text(
-                            _("action"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("action");
                         break;
                     case "temperament1":
-                        that.collapseText = new createjs.Text(
-                            _("temperament"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("temperament");
                         break;
                     case "start":
-                        that.collapseText = new createjs.Text(
-                            _("start"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("start");
                         break;
                     case "matrix":
-                        that.collapseText = new createjs.Text(
-                            _("matrix"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("matrix");
                         break;
                     case "status":
-                        that.collapseText = new createjs.Text(
-                            _("status"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("status");
                         break;
                     case "pitchdrummatrix":
-                        that.collapseText = new createjs.Text(
-                            _("drum mapper"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("drum mapper");
                         break;
                     case "timbre":
-                        that.collapseText = new createjs.Text(
-                            _("timbre"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("timbre");
                         break;
                     case "pitchstaircase":
-                        that.collapseText = new createjs.Text(
-                            _("stair"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("stair");
                         break;
                     case "tempo":
-                        that.collapseText = new createjs.Text(
-                            _("tempo"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("tempo");
                         break;
                     case "modewidget":
-                        that.collapseText = new createjs.Text(
-                            _("mode"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("mode");
                         break;
                     case "pitchslider":
-                        that.collapseText = new createjs.Text(
-                            _("slider"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("slider");
                         break;
                     case "musickeyboard":
-                        that.collapseText = new createjs.Text(
-                            _("keyboard"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("keyboard");
                         break;
                     case "drum":
-                        that.collapseText = new createjs.Text(
-                            _("drum"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("drum");
                         break;
                     case "rhythmruler2":
-                        that.collapseText = new createjs.Text(
-                            _("rhythm maker"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("rhythm maker");
+                        break;
+                    case "sampler":
+                        collapseLabel = _("sampler");
+                        break;
+                    case "meterwidget":
+                        collapseLabel = _("meter");
+                        break;
+                    case "oscilloscope":
+                        collapseLabel = _("oscilloscope");
+                        break;
+                    case "arpeggiomatrix":
+                        collapseLabel = _("arpeggio");
+                        break;
+                    case "aimusic":
+                        collapseLabel = _("AI Music");
+                        break;
+                    case "reflection":
+                        collapseLabel = _("reflection");
+                        break;
+                    case "legobricks":
+                        collapseLabel = _("LEGO Bricks");
+                        break;
+                    case "aidebugger":
+                        collapseLabel = _("debugger");
+                        break;
+                    case "chordbuilder":
+                        collapseLabel = _("chord progression");
                         break;
                     case "newnote":
-                        that.collapseText = new createjs.Text(
-                            _("note value"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("note value");
                         break;
                     case "interval":
-                        that.collapseText = new createjs.Text(
-                            _("scalar interval"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("scalar interval");
                         break;
                     case "osctime":
-                        that.collapseText = new createjs.Text(
-                            _("milliseconds"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("milliseconds");
                         break;
                     case "temperament":
-                        that.collapseText = new createjs.Text(
-                            _("temperament"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("temperament");
                         break;
                     case "definemode":
-                        that.collapseText = new createjs.Text(
-                            _("mode"),
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = _("mode");
                         break;
                     default:
-                        that.collapseText = new createjs.Text(
-                            "foobar",
-                            fontSize + "px Sans",
-                            platformColor.blockText
-                        );
+                        collapseLabel = that.protoblock?.staticLabels?.[0] || _(that.name);
                 }
 
+                that.collapseText = new createjs.Text(
+                    collapseLabel,
+                    fontSize + "px Sans",
+                    platformColor.blockText
+                );
                 that.collapseText.textAlign = "left";
                 that.collapseText.textBaseline = "alphabetic";
                 that.container.addChild(that.collapseText);

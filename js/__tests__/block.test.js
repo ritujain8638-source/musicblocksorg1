@@ -3059,4 +3059,105 @@ describe("Block Foundation", () => {
             expect(block.isClampBlock()).toBe(false);
         });
     });
+
+    describe("_generateCollapseArtwork() collapse labels", () => {
+        let originalImage;
+
+        beforeEach(() => {
+            originalImage = global.Image;
+            global.Image = class {
+                set src(val) {
+                    this._src = val;
+                    if (typeof this.onload === "function") {
+                        this.onload();
+                    }
+                }
+
+                get src() {
+                    return this._src;
+                }
+            };
+            global.window.base64Encode = jest.fn(str => str);
+            global.safeSVG = jest.fn(str => str);
+            global.EXPANDBUTTON = "<svg></svg>";
+            global.COLLAPSEBUTTON = "<svg></svg>";
+            global.PALETTEFILLCOLORS = { widgets: "#111111" };
+            global.PALETTESTROKECOLORS = { widgets: "#222222" };
+            global.PALETTEHIGHLIGHTCOLORS = { widgets: "#333333" };
+            global.HIGHLIGHTSTROKECOLORS = { widgets: "#444444" };
+            global.createjs.Text.mockImplementation((text, font, color) => ({
+                text,
+                font,
+                color,
+                visible: true
+            }));
+        });
+
+        afterEach(() => {
+            global.Image = originalImage;
+        });
+
+        const buildCollapsibleBlock = (name, staticLabels = []) => {
+            const proto = {
+                ...mockProtoBlock,
+                name,
+                scale: 1,
+                palette: { name: "widgets" },
+                staticLabels,
+                capabilities: { collapsible: true }
+            };
+            const blocks = {
+                ...mockBlocks,
+                blockCollapseArt: [],
+                cleanupAfterLoad: jest.fn()
+            };
+            const block = new Block(proto, blocks);
+            block.blockIndex = 0;
+            block.container = new global.createjs.Container();
+            block.collapseArtwork = "<svg>block_label</svg>";
+            block._positionCollapseLabel = jest.fn();
+            block._ensureDecorationOnTop = jest.fn();
+            return block;
+        };
+
+        it.each([
+            ["chordbuilder", "chord progression"],
+            ["sampler", "sampler"],
+            ["meterwidget", "meter"],
+            ["oscilloscope", "oscilloscope"],
+            ["arpeggiomatrix", "arpeggio"],
+            ["aimusic", "AI Music"],
+            ["reflection", "reflection"],
+            ["legobricks", "LEGO Bricks"],
+            ["aidebugger", "debugger"],
+            ["matrix", "matrix"],
+            ["pitchdrummatrix", "drum mapper"],
+            ["rhythmruler2", "rhythm maker"]
+        ])("sets collapseText for %s to %s", (blockName, expectedLabel) => {
+            const block = buildCollapsibleBlock(blockName);
+
+            block._generateCollapseArtwork(null);
+
+            expect(block.collapseText).not.toBeNull();
+            expect(block.collapseText.text).toBe(expectedLabel);
+            expect(block.blocks.blockCollapseArt[0]).toContain(expectedLabel);
+        });
+
+        it("falls back to protoblock.staticLabels[0] instead of 'foobar' for unlisted collapsible blocks", () => {
+            const block = buildCollapsibleBlock("customwidget", ["custom widget"]);
+
+            block._generateCollapseArtwork(null);
+
+            expect(block.collapseText.text).toBe("custom widget");
+            expect(block.collapseText.text).not.toBe("foobar");
+        });
+
+        it("falls back to translated block name when protoblock has no staticLabels", () => {
+            const block = buildCollapsibleBlock("customwidget", []);
+
+            block._generateCollapseArtwork(null);
+
+            expect(block.collapseText.text).toBe("customwidget");
+        });
+    });
 });
